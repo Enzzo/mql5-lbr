@@ -1,9 +1,27 @@
 MQL5:
 	Include:
 		vasilev:
-		
-	Expert:
+			controller:
+				OrderController.mqh
+			expert:
+				Expert.mqh
+				LBREA.mqh
+			model:
+				Model.mqh
+				TradeModel.mqh
+			utils:
+				StrintToToken.mqh
+			view:
+				CommentView.mqh
+				ConsoleView.mqh
+				LbrConfig.mqh
+				LbrUI.mqh
+				View.mqh
+			Observable.mqh
+			Observer.mqh
+	Experts:
 		vasilev:
+			testLBR.mq5
 		
 	Scripts:
 		lbr-test.mq5
