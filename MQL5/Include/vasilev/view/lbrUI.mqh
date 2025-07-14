@@ -9,7 +9,6 @@
 #include <Controls\Dialog.mqh>
 
 #include <vasilev\view\View.mqh>
-#include <vasilev\view\LbrConfig.mqh>
 #include <vasilev\model\TradeModel.mqh>
 #include <vasilev\logger\logger.mqh>
 //+------------------------------------------------------------------+
@@ -35,40 +34,36 @@
 
 class LbrUI : public View{
 public:
-   LbrUI(Observable*, const LbrConfig&);
+   LbrUI(Observable*);
    ~LbrUI();
    
-   void run();
-   void update() override;
-   void onChartEvent(const int, const long&, const double&, const string&);
-            
-private:
-   inline   bool is_running() const;
+   void Run();
+   void Update() override;
+   void OnChartEvent(const int, const long&, const double&, const string&);
+   void Destroy(const int reason);
    
 private:
-   bool running;
-   CAppDialog* _dialog;
+   CAppDialog _dialog;
    TradeModel* _model;
 };
 
 // +-----------------------------------------------------------+
 // |  ctor                                                     |
 // +-----------------------------------------------------------+
-LbrUI::LbrUI(Observable* model, const LbrConfig& conf) : 
+LbrUI::LbrUI(Observable* model) : 
    View(model),
-   running(false), 
-   _dialog(new CAppDialog()),
+   //_dialog(new CAppDialog()),
    _model(model){
    
-   DEBUG("Entering LbrUI constructor...")
+   DEBUG(__FUNCTION__)
    
-   if(!_dialog.Create(conf.chart, 
-      conf.name,
-      conf.subwin, 
-      conf.x, 
-      conf.y, 
-      conf.x + conf.w,
-      conf.y + conf.h)){
+   if(!_dialog.Create(ChartID(), 
+      "LBR",
+      0, 
+      20, 
+      20, 
+      100,
+      100)){
          Alert("failed to create expert window!!!");
          FATAL("failed to create expert window")
          ExpertRemove();
@@ -79,38 +74,30 @@ LbrUI::LbrUI(Observable* model, const LbrConfig& conf) :
 // |  dtor                                                     |
 // +-----------------------------------------------------------+
 LbrUI::~LbrUI(){
-   _dialog.Destroy();
-   if(CheckPointer(_dialog) == POINTER_DYNAMIC){
-      delete (_dialog);
-      _dialog = NULL;
-   }   
+   DEBUG(__FUNCTION__)
+   //delete _dialog;
 }
 
 // +-----------------------------------------------------------+
 // |  void run()                                               |
 // +-----------------------------------------------------------+
-void LbrUI::run(void){
-   if(!is_running()){
-      _dialog.Run();
-      running = true;
-   }
+void LbrUI::Run(void){
+   DEBUG(__FUNCTION__)
+   _dialog.Run();
 }
 
-void LbrUI::update() override{
-
+void LbrUI::Update() override{
+   
 }
 
-void LbrUI::onChartEvent(const int id,
+void LbrUI::OnChartEvent(const int id,
                   const long &lparam,
                   const double &dparam,
                   const string &sparam){
    _dialog.ChartEvent(id, lparam, dparam, sparam);
-   PrintFormat("%d, %d, %d, %s", id, lparam, dparam, sparam);
 }
 
-// +-----------------------------------------------------------+
-// |  void is_running()                                        |
-// +-----------------------------------------------------------+
-bool LbrUI::is_running(void) const{
-   return running;
+void LbrUI::Destroy(const int reason){
+   DEBUG(__FUNCTION__ + " reason: " + IntegerToString(reason))
+   _dialog.Destroy(reason);
 }

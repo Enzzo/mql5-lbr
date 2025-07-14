@@ -37,10 +37,10 @@ class Observer{
 public:
    Observer(Observable* target){
       _target = target;
-      _target.addObserver(&this);
+      _target.AddObserver(&this);
    };
    virtual ~Observer(){};
-   virtual void update() = 0;
+   virtual void Update() = 0;
    
 protected:
    Observable* _target;

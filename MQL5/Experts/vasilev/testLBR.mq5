@@ -39,7 +39,11 @@ int OnInit(){
 //+------------------------------------------------------------------+
 void OnDeinit(const int reason){
    EventKillTimer();
-   ea.OnDeinit(reason);
+   // ea.OnDeinit(reason);
+   
+   if(reason == REASON_REMOVE){
+      delete(ea);
+   }
 }
 //+------------------------------------------------------------------+
 //| Expert tick function                                             |

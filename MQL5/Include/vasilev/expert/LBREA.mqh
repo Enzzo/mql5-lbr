@@ -51,9 +51,14 @@ public:
    
 private:
    OrderController* _ctrl;
+   TradeModel* _model;
+   // LbrUI* _view;
 };
 
-LBREA::LBREA(void) : _ctrl(new OrderController(NULL, NULL)){
+LBREA::LBREA(void){
+   _model = new TradeModel();
+   // _view = new LbrUI(_model);
+   _ctrl = new OrderController(_model, NULL);
    DEBUG("Entering LBREA constructor")
 };
 
@@ -63,9 +68,18 @@ LBREA::~LBREA(){
       delete _ctrl;
       _ctrl = NULL;
    }
+   /*if(CheckPointer(_view) == POINTER_DYNAMIC){
+      delete _view;
+      _view = NULL;
+   } */  
+   if(CheckPointer(_model) == POINTER_DYNAMIC){
+      delete _model;
+      _model = NULL;
+   }
 }
 int LBREA::OnInit() override{
-   
+   DEBUG(__FUNCTION__)
+   //_view.Run();
    return INIT_SUCCEEDED;
 };
 
@@ -76,11 +90,8 @@ void LBREA::OnChartEvent( const int id,
                               const long &lparam,
                               const double &dparam,
                               const string &sparam) override{
-   DEBUG(__FUNCTION__ + " " + 
-         IntegerToString(id) + " " + 
-         IntegerToString(lparam) + " " + 
-         DoubleToString(dparam) + " " + 
-         sparam)
+
+   //_view.OnChartEvent(id, lparam, dparam, sparam);
    
    if(id == CHARTEVENT_KEYDOWN){
       DEBUG("Key down: " + IntegerToString(lparam))
@@ -97,8 +108,6 @@ void LBREA::OnTimer() override{
 };     
           
 void LBREA::OnDeinit(const int reason) override{
-   DEBUG("LBREA " + __FUNCTION__ + " reason: " + IntegerToString(reason))
-   if(reason == REASON_REMOVE){
-      delete (&this);
-   }
+   DEBUG(__FUNCTION__)
+   //_view.Destroy(reason);
 };

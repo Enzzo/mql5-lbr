@@ -38,28 +38,28 @@ public:
    Observable(){};
    virtual ~Observable(){};
    
-   void addObserver(Observer* observer);
-   void notify() const ;
+   void AddObserver(Observer* observer);
+   void Notify() const ;
    
 private:
-   inline int observersTotal() const;
+   inline int ObserversTotal() const;
    
 private:
    Observer* _observer_pointers[];
 };
 
-void Observable::addObserver(Observer *observer){
-   ArrayResize(_observer_pointers, observersTotal() +1);
-   _observer_pointers[observersTotal() - 1] = observer;
+void Observable::AddObserver(Observer *observer){
+   ArrayResize(_observer_pointers, ObserversTotal() +1);
+   _observer_pointers[ObserversTotal() - 1] = observer;
 }
 
-int Observable::observersTotal(void) const {
+int Observable::ObserversTotal(void) const {
    return ArraySize(_observer_pointers);
 }
 
-void Observable::notify(void) const {
-   for(int i = 0; i < observersTotal(); ++i){
-      _observer_pointers[i].update();
+void Observable::Notify(void) const {
+   for(int i = 0; i < ObserversTotal(); ++i){
+      _observer_pointers[i].Update();
    }
 }
 

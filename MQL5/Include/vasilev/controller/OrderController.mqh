@@ -20,21 +20,21 @@ public:
    OrderController(TradeModel*, LbrUI*);
    ~OrderController();
    
-   bool trade() const;
-   ulong getResultDeal() const;
-   ulong getResultOrder() const;
+   bool Trade() const;
+   ulong GetResultDeal() const;
+   ulong GetResultOrder() const;
    void OnChartEvent(const int id,
                   const long &lparam,
                   const double &dparam,
                   const string &sparam);
    
 private:
-   bool buy() const;
-   bool sell() const;
-   bool buyStop() const;
-   bool sellStop() const;
-   bool buyLimit() const;
-   bool sellLimit() const;
+   bool Buy() const;
+   bool Sell() const;
+   bool BuyStop() const;
+   bool SellStop() const;
+   bool BuyLimit() const;
+   bool SellLimit() const;
    
 private:
    CTrade* _trade;
@@ -54,21 +54,21 @@ OrderController::~OrderController(){
    }
 }
 
-bool OrderController::trade() const {
-   bool result = buy();
-   _model.addTicket(getResultOrder());
+bool OrderController::Trade() const {
+   bool result = Buy();
+   _model.AddTicket(GetResultOrder());
    return result;
 }
 
-bool OrderController::buy() const{
+bool OrderController::Buy() const{
    return _trade.Buy(.01);
 }
 
-ulong OrderController::getResultDeal(void) const{
+ulong OrderController::GetResultDeal(void) const{
    return _trade.ResultDeal();
 }
 
-ulong OrderController::getResultOrder(void) const{
+ulong OrderController::GetResultOrder(void) const{
    return _trade.ResultOrder();
 }
 

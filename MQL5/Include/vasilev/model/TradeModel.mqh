@@ -11,6 +11,8 @@
 
 #include <vasilev\model\Model.mqh>
 
+#include <vasilev\logger\logger.mqh>
+
 // +-----------------------------------------------------------+
 // |  DECLARATION                                              |
 // +-----------------------------------------------------------+
@@ -21,9 +23,9 @@ public:
    TradeModel();
    ~TradeModel();
    
-   void addTicket(const ulong);
-   const CArrayLong* getTickets() const;
-   inline ulong getLastTicket() const;
+   void AddTicket(const ulong);
+   const CArrayLong* GetTickets() const;
+   inline ulong GetLastTicket() const;
    
 private:
    ulong _lastTicket;
@@ -37,6 +39,7 @@ private:
 // |  ctor                                                     |
 // +-----------------------------------------------------------+
 TradeModel::TradeModel(){
+   DEBUG("Entering "+__FUNCTION__)
    _orderTickets = new CArrayLong();
    _accountInfo = new CAccountInfo();
 }
@@ -56,19 +59,19 @@ TradeModel::~TradeModel(){
 // +-----------------------------------------------------------+
 // |  void addTicket(const ulong ticket)                       |
 // +-----------------------------------------------------------+
-void TradeModel::addTicket(const ulong ticket){
+void TradeModel::AddTicket(const ulong ticket){
    _lastTicket = ticket;
    _orderTickets.Add(ticket);
-   notify();
+   Notify();
 }
 
 // +-----------------------------------------------------------+
 // |  CArrayLong* getTickets()                                 |
 // +-----------------------------------------------------------+
-const CArrayLong* TradeModel::getTickets() const{
+const CArrayLong* TradeModel::GetTickets() const{
    return _orderTickets;
 }
 
-ulong TradeModel::getLastTicket(void)const{
+ulong TradeModel::GetLastTicket(void)const{
    return _lastTicket;
 }
