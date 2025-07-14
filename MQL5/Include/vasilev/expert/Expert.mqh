@@ -29,6 +29,7 @@
 //+------------------------------------------------------------------+
 class Expert : public CObject{
 public:
+   Expert(){};
    ~Expert(){};
 
    virtual int OnInit() = 0;
