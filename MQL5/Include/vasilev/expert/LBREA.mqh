@@ -12,6 +12,8 @@
 #include <vasilev\model\TradeModel.mqh>
 #include <vasilev\view\LbrUI.mqh>
 #include <vasilev\controller\OrderController.mqh>
+
+#include <vasilev\logger\logger.mqh>
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
@@ -48,21 +50,15 @@ public:
    void OnDeinit(const int reason) override;
    
 private:
-   // LbrUI* _view;
-   TradeModel* _model;
    OrderController* _ctrl;
 };
 
-LBREA::LBREA(void) : _model(new TradeModel()), _ctrl(new OrderController(NULL, NULL)){
-
+LBREA::LBREA(void) : _ctrl(new OrderController(NULL, NULL)){
+   DEBUG("Entering LBREA constructor")
 };
 
 LBREA::~LBREA(){
-   
-   if(CheckPointer(_model) == POINTER_DYNAMIC){
-      delete _model;
-      _model = NULL;
-   }
+   DEBUG("LBREA destructor")
    if(CheckPointer(_ctrl) == POINTER_DYNAMIC){
       delete _ctrl;
       _ctrl = NULL;
@@ -70,7 +66,7 @@ LBREA::~LBREA(){
 }
 int LBREA::OnInit() override{
    
-   return 0;
+   return INIT_SUCCEEDED;
 };
 
 void LBREA::OnTick() override{
@@ -80,12 +76,28 @@ void LBREA::OnChartEvent( const int id,
                               const long &lparam,
                               const double &dparam,
                               const string &sparam) override{
+   DEBUG(__FUNCTION__ + " " + 
+         IntegerToString(id) + " " + 
+         IntegerToString(lparam) + " " + 
+         DoubleToString(dparam) + " " + 
+         sparam)
+   
+   if(id == CHARTEVENT_KEYDOWN){
+      DEBUG("Key down: " + IntegerToString(lparam))
+      if(lparam == 'B'){
+         DEBUG("BUY")
+      }
+      if(lparam == 'S'){
+         DEBUG("SELL")
+      }
+   }
 };
 
 void LBREA::OnTimer() override{
 };     
           
 void LBREA::OnDeinit(const int reason) override{
+   DEBUG("LBREA " + __FUNCTION__ + " reason: " + IntegerToString(reason))
    if(reason == REASON_REMOVE){
       delete (&this);
    }

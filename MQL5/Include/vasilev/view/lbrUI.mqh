@@ -11,6 +11,7 @@
 #include <vasilev\view\View.mqh>
 #include <vasilev\view\LbrConfig.mqh>
 #include <vasilev\model\TradeModel.mqh>
+#include <vasilev\logger\logger.mqh>
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
@@ -59,6 +60,8 @@ LbrUI::LbrUI(Observable* model, const LbrConfig& conf) :
    _dialog(new CAppDialog()),
    _model(model){
    
+   DEBUG("Entering LbrUI constructor...")
+   
    if(!_dialog.Create(conf.chart, 
       conf.name,
       conf.subwin, 
@@ -67,6 +70,7 @@ LbrUI::LbrUI(Observable* model, const LbrConfig& conf) :
       conf.x + conf.w,
       conf.y + conf.h)){
          Alert("failed to create expert window!!!");
+         FATAL("failed to create expert window")
          ExpertRemove();
       }
 }
