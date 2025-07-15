@@ -37,7 +37,7 @@
 
 class LBREA : public Expert{
 public:
-   LBREA();
+   LBREA(const UIParams&);
    ~LBREA();
    
    int OnInit() override;
@@ -52,12 +52,12 @@ public:
 private:
    OrderController* _ctrl;
    TradeModel* _model;
-   // LbrUI* _view;
+   LbrUI* _view;
 };
 
-LBREA::LBREA(void){
+LBREA::LBREA(const UIParams& uiParams){
    _model = new TradeModel();
-   // _view = new LbrUI(_model);
+   _view = new LbrUI(_model, uiParams);
    _ctrl = new OrderController(_model, NULL);
    DEBUG("Entering LBREA constructor")
 };
@@ -68,10 +68,10 @@ LBREA::~LBREA(){
       delete _ctrl;
       _ctrl = NULL;
    }
-   /*if(CheckPointer(_view) == POINTER_DYNAMIC){
+   if(CheckPointer(_view) == POINTER_DYNAMIC){
       delete _view;
       _view = NULL;
-   } */  
+   }
    if(CheckPointer(_model) == POINTER_DYNAMIC){
       delete _model;
       _model = NULL;
@@ -79,7 +79,11 @@ LBREA::~LBREA(){
 }
 int LBREA::OnInit() override{
    DEBUG(__FUNCTION__)
-   //_view.Run();
+   if(!_view.Redraw()){
+      FATAL("Error creating dialog window!!!")
+      return INIT_FAILED;
+   }
+   _view.Run();
    return INIT_SUCCEEDED;
 };
 
@@ -91,7 +95,7 @@ void LBREA::OnChartEvent( const int id,
                               const double &dparam,
                               const string &sparam) override{
 
-   //_view.OnChartEvent(id, lparam, dparam, sparam);
+   _view.OnChartEvent(id, lparam, dparam, sparam);
    
    if(id == CHARTEVENT_KEYDOWN){
       DEBUG("Key down: " + IntegerToString(lparam))
@@ -109,5 +113,5 @@ void LBREA::OnTimer() override{
           
 void LBREA::OnDeinit(const int reason) override{
    DEBUG(__FUNCTION__)
-   //_view.Destroy(reason);
+   _view.Destroy(reason);
 };
