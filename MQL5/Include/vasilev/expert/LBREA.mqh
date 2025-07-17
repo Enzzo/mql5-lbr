@@ -115,6 +115,10 @@ void LBREA::OnChartEvent( const int id,
          DEBUG("SELL")
          _ctrl.Sell();
       }
+      if(lparam == 'C'){
+         DEBUG("CLOSE ALL TRADES")
+         _ctrl.CloseAll();
+      }
    }
 };
 

@@ -6,7 +6,7 @@
 #property copyright "Sergey Vasilev"
 #property link      "vasilevnogliki@yandex.ru"
 
-#include <Trade\Trade.mqh>
+#include <vasilev\trade\ExtendedTrade.mqh>
 #include <vasilev\model\TradeModel.mqh>
 #include <vasilev\view\LbrUI.mqh>
 
@@ -38,13 +38,13 @@ public:
    bool CloseAll() const;
    
 private:
-   CTrade* _trade;
+   ExtendedTrade* _trade;
    TradeModel* _model;
    LbrUI* _view;
 };
 
 OrderController::OrderController(TradeModel* model, LbrUI* view):
-   _trade(new CTrade()),
+   _trade(new ExtendedTrade()),
    _model(model),
    _view(view){}
 
@@ -74,7 +74,7 @@ bool OrderController::Sell() const{
 }
 
 bool OrderController::CloseAll(void) const{
-   
+   return (_trade.CloseTrades() && _trade.DeletePendings());
 }
 
 ulong OrderController::GetResultDeal(void) const{
