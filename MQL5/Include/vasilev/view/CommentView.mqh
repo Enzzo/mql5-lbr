@@ -34,7 +34,7 @@ public:
    CommentView(TradeModel* model);
    ~CommentView();
    
-   void update() override;
+   void Update() override;
 private:
    TradeModel* _model;
 };
@@ -45,6 +45,7 @@ private:
 // |  ctor                                                     |
 // +-----------------------------------------------------------+
 CommentView::CommentView(TradeModel* model):View(model){
+   DEBUG(__FUNCTION__)
    _model = _target;
 }
 
@@ -54,13 +55,15 @@ CommentView::CommentView(TradeModel* model):View(model){
 // |  dtor                                                     |
 // +-----------------------------------------------------------+
 CommentView::~CommentView(){
-
+   Comment("");
 }
 
 // +-----------------------------------------------------------+
 // |  void update()                                            |
 // +-----------------------------------------------------------+
-void CommentView::update(void) override{
-   _model = _target;
-   Comment("Last ticket: ", _model.getLastTicket());
+void CommentView::Update(void) override{
+   DEBUG(__FUNCTION__)
+   //_model = _target;
+   Comment("Last ticket: ", IntegerToString(_model.GetLastTicket()) +
+            "\n Account Balance: ", DoubleToString(_model.GetAccountBalance()));
 }

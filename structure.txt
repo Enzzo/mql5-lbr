@@ -17,6 +17,7 @@ MQL5:
 				LbrConfig.mqh
 				LbrUI.mqh
 				View.mqh
+			trade.mqh
 			Observable.mqh
 			Observer.mqh
 	Experts:

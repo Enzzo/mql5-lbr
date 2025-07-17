@@ -28,13 +28,14 @@ public:
                   const double &dparam,
                   const string &sparam);
    
-private:
+public:
    bool Buy() const;
    bool Sell() const;
    bool BuyStop() const;
    bool SellStop() const;
    bool BuyLimit() const;
    bool SellLimit() const;
+   bool CloseAll() const;
    
 private:
    CTrade* _trade;
@@ -61,7 +62,19 @@ bool OrderController::Trade() const {
 }
 
 bool OrderController::Buy() const{
-   return _trade.Buy(.01);
+   bool result = _trade.Buy(.01);
+   _model.AddTicket(GetResultOrder());
+   return result;
+}
+
+bool OrderController::Sell() const{
+   bool result = _trade.Sell(.01);
+   _model.AddTicket(GetResultOrder());
+   return result;
+}
+
+bool OrderController::CloseAll(void) const{
+   
 }
 
 ulong OrderController::GetResultDeal(void) const{

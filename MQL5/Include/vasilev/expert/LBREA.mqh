@@ -11,6 +11,7 @@
 #include <vasilev\expert\Expert.mqh>
 #include <vasilev\model\TradeModel.mqh>
 #include <vasilev\view\LbrUI.mqh>
+#include <vasilev\view\CommentView.mqh>
 #include <vasilev\controller\OrderController.mqh>
 
 #include <vasilev\logger\logger.mqh>
@@ -53,12 +54,15 @@ private:
    OrderController* _ctrl;
    TradeModel* _model;
    LbrUI* _view;
+   CommentView* _c_view;
 };
 
 LBREA::LBREA(const UIParams& uiParams){
    _model = new TradeModel();
    _view = new LbrUI(_model, uiParams);
+   _c_view = new CommentView(_model);
    _ctrl = new OrderController(_model, NULL);
+   
    DEBUG("Entering LBREA constructor")
 };
 
@@ -71,6 +75,10 @@ LBREA::~LBREA(){
    if(CheckPointer(_view) == POINTER_DYNAMIC){
       delete _view;
       _view = NULL;
+   }
+   if(CheckPointer(_c_view) == POINTER_DYNAMIC){
+      delete _c_view;
+      _c_view = NULL;
    }
    if(CheckPointer(_model) == POINTER_DYNAMIC){
       delete _model;
@@ -101,14 +109,17 @@ void LBREA::OnChartEvent( const int id,
       DEBUG("Key down: " + IntegerToString(lparam))
       if(lparam == 'B'){
          DEBUG("BUY")
+         _ctrl.Buy();
       }
       if(lparam == 'S'){
          DEBUG("SELL")
+         _ctrl.Sell();
       }
    }
 };
 
 void LBREA::OnTimer() override{
+   _model.Notify();
 };     
           
 void LBREA::OnDeinit(const int reason) override{
