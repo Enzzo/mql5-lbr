@@ -26,7 +26,10 @@ public:
    void AddTicket(const ulong);
    const CArrayLong* GetTickets() const;
    inline ulong GetLastTicket() const;
-   double GetAccountBalance() const;
+   inline double GetAccountBalance() const;
+   inline double GetAccountMargin() const;
+   inline double GetAccountProfit() const;
+   inline double GetAccountEquity() const;
    
 private:
    ulong _lastTicket;
@@ -80,3 +83,13 @@ ulong TradeModel::GetLastTicket(void)const{
 double TradeModel::GetAccountBalance()const {
    return _accountInfo.Balance();
 }
+
+double TradeModel::GetAccountMargin() const{
+   return _accountInfo.Margin();
+};
+double TradeModel::GetAccountProfit() const{
+   return _accountInfo.Profit();
+};
+double TradeModel::GetAccountEquity() const{
+   return _accountInfo.Equity();
+};

@@ -74,7 +74,9 @@ bool OrderController::Sell() const{
 }
 
 bool OrderController::CloseAll(void) const{
-   return (_trade.CloseTrades() && _trade.DeletePendings());
+   DEBUG(__FUNCTION__)
+   bool result = _trade.CloseTrades() && _trade.DeletePendings();
+   return result;
 }
 
 ulong OrderController::GetResultDeal(void) const{

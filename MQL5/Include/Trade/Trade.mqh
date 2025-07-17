@@ -38,7 +38,7 @@ protected:
 
 public:
                      CTrade(void);
-                    ~CTrade(void);
+                    virtual ~CTrade(void);
    //--- methods of access to protected data
    void              LogLevel(const ENUM_LOG_LEVELS log_level) { m_log_level=log_level; }
    void              Request(MqlTradeRequest &request) const;

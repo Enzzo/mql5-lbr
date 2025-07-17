@@ -63,7 +63,10 @@ CommentView::~CommentView(){
 // +-----------------------------------------------------------+
 void CommentView::Update(void) override{
    DEBUG(__FUNCTION__)
-   //_model = _target;
    Comment("Last ticket: ", IntegerToString(_model.GetLastTicket()) +
-            "\n Account Balance: ", DoubleToString(_model.GetAccountBalance()));
+            "\nAccount Balance: \t", DoubleToString(_model.GetAccountBalance(), 2) + 
+            "\nAccount Margin: \t", DoubleToString(_model.GetAccountMargin(), 2) + 
+            "\nAccount Profit: \t", DoubleToString(_model.GetAccountProfit(), 2) +
+            "\nAccount Equity: \t", DoubleToString(_model.GetAccountEquity(), 2)
+            );
 }

@@ -6,8 +6,6 @@
 #property copyright "Sergey Vasilev"
 #property link      "vasilevnogliki@yandex.ru"
 
-#include <controls\dialog.mqh>
-
 #include <vasilev\expert\Expert.mqh>
 #include <vasilev\model\TradeModel.mqh>
 #include <vasilev\view\LbrUI.mqh>
