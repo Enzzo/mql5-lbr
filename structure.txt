@@ -11,6 +11,7 @@ MQL5:
 				TradeModel.mqh
 			utils:
 				StrintToToken.mqh
+				LineProcessor.mqh
 			view:
 				CommentView.mqh
 				ConsoleView.mqh

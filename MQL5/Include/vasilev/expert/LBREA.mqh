@@ -107,11 +107,11 @@ void LBREA::OnChartEvent( const int id,
       DEBUG("Key down: " + IntegerToString(lparam))
       if(lparam == 'B'){
          DEBUG("BUY")
-         _ctrl.Buy();
+         //_ctrl.Buy();
       }
       if(lparam == 'S'){
          DEBUG("SELL")
-         _ctrl.Sell();
+         //_ctrl.Sell();
       }
       if(lparam == 'C'){
          DEBUG("CLOSE ALL TRADES")

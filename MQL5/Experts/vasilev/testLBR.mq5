@@ -75,8 +75,8 @@ int OnInit(){
    uip.subwin = 0;
    uip.x = X_OFFSET;
    uip.y = Y_OFFSET;
-   uip.w = 110;
-   uip.h = 108;
+   uip.w = 120;
+   uip.h = 208;
    uip.corner = CORNER;
    uip.fontSize = FONTSIZE;
    uip.hkTp = HK_TP[0];
