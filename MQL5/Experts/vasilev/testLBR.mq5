@@ -36,9 +36,13 @@ input string      TITLE01     = "CUSTOMIZE CONTROL";//--------------------------
 input string      HK_TP       = "T";               // hotkey for TP
 input string      HK_SL       = "S";               // hotkey for SL
 input string      HK_PR       = "P";               // hotkey for PRICE
+input string      HK_OP       = "O";               // hotkey for OPEN
+input string      HK_CL       = "C";               // hotkey for CLOSE
 input color       L_TP        = clrGreen;          // take profit line color
 input color       L_SL        = clrRed;            // stop loss line color
 input color       L_PR        = clrOrange;         // price open line color
+input color       L_OP        = clrYellow;         // time open line color
+input color       L_CL        = clrYellowGreen;    // time close line color
 
 input string      TITLE02     = "CUSTOMIZE PANEL"; //-------------------------------->
 input color       BG_COLOR    = C'87,173,202';     // panel color
@@ -55,6 +59,7 @@ input int         FONTSIZE    = 7;                 // font size
 #include <vasilev\logger\logger.mqh>
 
 UIParams uip;
+CTRLParams eap;
 
 Expert* ea = NULL;
 //+------------------------------------------------------------------+
@@ -64,10 +69,14 @@ int OnInit(){
    EventSetTimer(1);   
    DEBUG("Entering " + __FUNCTION__)
    
-   if(StringLen(HK_TP) != 1 || StringLen(HK_SL) != 1 || StringLen(HK_PR) != 1){
-      FATAL("HOTKEY PARAMETER SIZE ERROR!!!")
-      FATAL("TERMINATE ADVISOR")
-      return INIT_PARAMETERS_INCORRECT;
+   if(StringLen(HK_TP) != 1 || 
+      StringLen(HK_SL) != 1 || 
+      StringLen(HK_PR) != 1 || 
+      StringLen(HK_OP) != 1 || 
+      StringLen(HK_CL) != 1){
+         FATAL("HOTKEY PARAMETER SIZE ERROR!!!")
+         FATAL("TERMINATE ADVISOR")
+         return INIT_PARAMETERS_INCORRECT;
    }
    
    uip.chart = 0;
@@ -79,16 +88,21 @@ int OnInit(){
    uip.h = 208;
    uip.corner = CORNER;
    uip.fontSize = FONTSIZE;
-   uip.hkTp = HK_TP[0];
-   uip.hkSl = HK_SL[0];
-   uip.hkPr = HK_PR[0];
-   uip.lTp = L_TP;
-   uip.lSl = L_SL;
-   uip.lPr = L_PR;
+   
+   eap.hk_tp = StringGetCharacter(HK_TP, 0);
+   eap.hk_sl = StringGetCharacter(HK_SL, 0);
+   eap.hk_pr = StringGetCharacter(HK_PR, 0);
+   eap.hk_op = StringGetCharacter(HK_OP, 0);
+   eap.hk_cl = StringGetCharacter(HK_CL, 0);
+   eap.l_tp = L_TP;
+   eap.l_sl = L_SL;
+   eap.l_pr = L_PR;
+   eap.l_op = L_OP;
+   eap.l_cl = L_CL;
    
    if(ea == NULL){
       DEBUG("Create new LBREA")
-      ea = new LBREA(uip);
+      ea = new LBREA(uip, eap);
    }
    return(ea.OnInit());
 }
