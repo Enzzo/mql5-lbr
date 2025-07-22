@@ -22,13 +22,14 @@
 #define INFO_LOG
 #define DEBUG_LOG
 #define WARN_LOG
-#define ERROR_LOG
+//#define ERROR_LOG
 #define FATAL_LOG
 
 input string      TITLE00     = "CUSTOMIZE DEAL";  //-------------------------------->
 input int         MAGIC       = 111087;            // magic
 input int         SLIPPAGE    = 5;                 // slippage
-input double      RISK        = 1.00;              // risk
+input double      RISK_PCNT   = 1.00;              // risk (%)
+input double      RISK_REAL   = 5.00;              // risk ($)
 input double      COMISSION   = 0.0;               // comission
 input string      COMMENT     = "";                // order comment
 
@@ -49,7 +50,7 @@ input color       BG_COLOR    = C'87,173,202';     // panel color
 input ENUM_BASE_CORNER CORNER = CORNER_RIGHT_LOWER; // base corner
 input int         X_OFFSET    = 20;                // X - offset
 input int         Y_OFFSET    = 20;                // Y - offset
-input int         FONTSIZE    = 7;                 // font size
+input int         FONTSIZE    = 8;                 // font size
 
 #define CONTROLS_DIALOG_COLOR_BG             BG_COLOR
 #define CONTROLS_DIALOG_COLOR_CLIENT_BG      BG_COLOR
@@ -60,6 +61,7 @@ input int         FONTSIZE    = 7;                 // font size
 
 UIParams uip;
 CTRLParams eap;
+MODELParams mp;
 
 Expert* ea = NULL;
 //+------------------------------------------------------------------+
@@ -100,9 +102,13 @@ int OnInit(){
    eap.l_op = L_OP;
    eap.l_cl = L_CL;
    
+   mp.risk_pcnt = RISK_PCNT;
+   mp.risk_real = RISK_REAL;
+   mp.comission = COMISSION;
+   
    if(ea == NULL){
       DEBUG("Create new LBREA")
-      ea = new LBREA(uip, eap);
+      ea = new LBREA(uip, eap, mp);
    }
    return(ea.OnInit());
 }

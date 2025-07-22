@@ -70,12 +70,15 @@ void CommentView::Update(void) override{
             "\nAccount Margin: \t", DoubleToString(_model.GetAccountMargin(), 2) + 
             "\nAccount Profit: \t", DoubleToString(_model.GetAccountProfit(), 2) +
             "\nAccount Equity: \t", DoubleToString(_model.GetAccountEquity(), 2) +
-            "\nTP: \t", DoubleToString(_model.GetTp(), 2) +
-            "\nSL: \t", DoubleToString(_model.GetSl(), 2) +
-            "\nOpen Price: \t", DoubleToString(_model.GetPrice(), 2) +
+            "\nTP: \t", DoubleToString(_model.GetTp(), Digits()) +
+            "\nSL: \t", DoubleToString(_model.GetSl(), Digits()) +
+            "\nOpen Price: \t", DoubleToString(_model.GetPrice(), Digits()) +
             "\nOpen Time: \t", TimeToString(_model.GetOpenTime()) +
             "\nClose Time: \t", TimeToString(_model.GetCloseTime()) +
-            "\nTrade type: \t", GetTradeType()
+            "\nTrade type: \t", GetTradeType() +
+            "\nLot: \t", DoubleToString(_model.GetLot(), 2) +
+            "\nRisk percent: \t", DoubleToString(_model.GetRiskPcnt(), 2) +
+            "\nRisk real: \t", _model.GetRiskReal()
             );
 }
 
